@@ -14,8 +14,10 @@ dependencies:
   firebase_auth: ^4.2.6
   rive: ^0.10.1
   fluttertoast: ^8.1.3
-  flutter_progress_hud: ^2.0.2
+  blurry_modal_progress_hud: ^1.1.0
   provider: ^6.0.5
+  flutter_gif: ^0.0.4
+  cloud_firestore: ^4.4.3
   
 dev_dependencies:
   flutter_test:
@@ -26,7 +28,9 @@ flutter:
   uses-material-design: true
 
   assets:
-    - lib/assets/rubbish.png
+    - lib/assets/image1.png
+    - lib/assets/gi.gif
+    
   fonts:
     - family: Anaqa
       fonts:
