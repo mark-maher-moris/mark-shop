@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mark_shop/Pages/Admin/adminScreen.dart';
@@ -9,6 +10,7 @@ import '/Learning/learning-screen.dart';
 import '/Pages/home.dart';
 import '/Pages/sign_up.dart';
 import '/serveses/auth.dart';
+import '/serveses/store.dart';
 import 'package:rive/rive.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
@@ -23,6 +25,7 @@ class _SignInState extends State<SignIn> {
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
 
   Auth authObj = Auth();
+  Store storeObj = Store();
 
   String? errorMsg;
 
@@ -114,6 +117,11 @@ class _SignInState extends State<SignIn> {
                               onPressed: () {
                                 _validate(context);
                               }),
+                          ElevatedButton(
+                              child: Text('get Data'),
+                              onPressed: () {
+                                storeObj.getProduct();
+                              }),
                         ],
                       ),
                     ),
@@ -154,7 +162,7 @@ class _SignInState extends State<SignIn> {
               SnackBar(content: Text('sign in with email and password')));
           print(' -------------------------');
           print(authObj.namozag.currentUser);
-        } on PlatformException catch (e) {
+        } on FirebaseAuthException catch (e) {
           print(' ------------------------- errorrrrrrr');
           modelHud.cahngeLoading(false);
           ScaffoldMessenger.of(context)

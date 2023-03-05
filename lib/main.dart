@@ -7,6 +7,9 @@ import '/Pages/sign_in.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
+import 'Pages/Admin/adminScreen.dart';
+import 'Pages/Admin/editProducts.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

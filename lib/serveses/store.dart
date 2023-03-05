@@ -16,4 +16,38 @@ class Store {
       fProductLocation: product.location
     });
   }
+
+  Stream<QuerySnapshot> loadProducts() {
+    return _firestoreInst.collection(fProductCollection).snapshots();
+  }
+
+  Future<List<Product>> getProduct() async {
+    List<Product> productsList = [];
+
+    // for (var doc in snapshot.documentes) {
+    //   var data = doc.data;
+    //   productsList.add(Product(
+    //       name: data[fProductName] ?? '',
+    //       description: data[fProductDiscreption] ?? '',
+    //       img: data[fProductImage],
+    //       location: data[fProductLocation] ?? '',
+    //       prise: data[fProductPrise],
+    //       category: data[fProductCategory] ?? ''));
+    // }
+
+    var snapshot2 = await _firestoreInst
+        .collection(fProductCollection)
+        .get()
+        .then((value) => value.docs.forEach((DocumentSnapshot doc) {
+              productsList.add(Product(
+                  name: doc[fProductName] ?? '',
+                  description: doc[fProductDiscreption] ?? '',
+                  img: doc[fProductImage],
+                  location: doc[fProductLocation] ?? '',
+                  prise: doc[fProductPrise],
+                  category: doc[fProductCategory] ?? ''));
+            }));
+
+    return productsList;
+  }
 }

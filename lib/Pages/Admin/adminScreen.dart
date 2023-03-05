@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mark_shop/Pages/Admin/addProduct.dart';
 
+import 'editProducts.dart';
+
 class AdminScreen extends StatelessWidget {
   const AdminScreen({super.key});
 
@@ -18,20 +20,20 @@ class AdminScreen extends StatelessWidget {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => AddProduct()));
                   },
-                  child: Text('add product')),
+                  child: Text('Add Product')),
               OutlinedButton(
                 onPressed: () {
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => AddProduct()));
+                      MaterialPageRoute(builder: (context) => EditProduct()));
                 },
-                child: Text('orders'),
+                child: Text('Edit Products'),
               ),
               OutlinedButton(
                   onPressed: () {
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => AddProduct()));
+                        MaterialPageRoute(builder: (context) => EditProduct()));
                   },
-                  child: Text('add product'))
+                  child: Text('Orders'))
             ]),
       ),
     ));
