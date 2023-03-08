@@ -3,6 +3,7 @@ import 'package:mark_shop/Learning/learning-screen.dart';
 import 'package:mark_shop/Pages/home.dart';
 import 'package:mark_shop/provider/adminMode.dart';
 import 'package:mark_shop/provider/modelHub.dart';
+import 'package:mark_shop/provider/toEdit.dart';
 import '/Pages/sign_in.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +25,8 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<ModelHud>(create: (context) => ModelHud()),
-        ChangeNotifierProvider<AdminMode>(create: (context) => AdminMode())
+        ChangeNotifierProvider<AdminMode>(create: (context) => AdminMode()),
+        ChangeNotifierProvider<ToEdit>(create: (context) => ToEdit()),
       ],
       child: MaterialApp(
         title: 'Mark Shop',

@@ -1,21 +1,18 @@
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mark_shop/provider/modelHub.dart';
+import 'package:mark_shop/provider/toEdit.dart';
 import 'package:provider/provider.dart';
 
 import '../../Constance/custm_textfeild.dart';
+import '../../Consts/consts.dart';
 import '../../Models/product.dart';
+import '../../provider/modelHub.dart';
 import '../../serveses/store.dart';
 
-class AddProduct extends StatefulWidget {
-  @override
-  State<AddProduct> createState() => _AddProductState();
-}
-
-class _AddProductState extends State<AddProduct> {
+class ManegeProduct extends StatelessWidget {
+  ManegeProduct({super.key});
   String? name, description, prise, location, imageLocation, category;
-
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
 
   Store firestoreObj = Store();
@@ -76,7 +73,7 @@ class _AddProductState extends State<AddProduct> {
                     hint: 'product image url',
                   ),
                   OutlinedButton(
-                    child: Text('add product now'),
+                    child: Text('Edit this Product'),
                     onPressed: () async {
                       FocusManager.instance.primaryFocus?.unfocus();
                       final _modelHud =
@@ -85,21 +82,20 @@ class _AddProductState extends State<AddProduct> {
                       if (_globalKey.currentState!.validate()) {
                         _globalKey.currentState!.save();
                         try {
-                          await firestoreObj.addProduct(Product(
-                              productId: '',
-                              name: name.toString(),
-                              description: description.toString(),
-                              img: imageLocation.toString(),
-                              location: location.toString(),
-                              prise: prise.toString(),
-                              category: category.toString()));
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Product Added')));
-
-                          _modelHud.cahngeLoading(false);
-                          print(_modelHud.isLoading.toString() +
-                              '------------------------');
+                          await firestoreObj.editProduct(
+                              Provider.of<ToEdit>(context, listen: false)
+                                  .productToEdit
+                                  ?.productId,
+                              ({
+                                fProductName: name,
+                                fProductCategory: category,
+                                fProductPrise: prise,
+                                fProductLocation: location,
+                                fProductDiscreption: description,
+                                fProductImage: imageLocation,
+                              }));
                           _globalKey.currentState!.reset();
+                          _modelHud.cahngeLoading(false);
                         } on PlatformException catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text('Error' + e.message.toString())));

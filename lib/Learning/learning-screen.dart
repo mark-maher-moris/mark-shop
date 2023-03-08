@@ -1,4 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../Consts/consts.dart';
+import '../Models/product.dart';
+import '../serveses/auth.dart';
+import '../serveses/store.dart';
 
 class Learning extends StatefulWidget {
   const Learning({super.key});
@@ -8,18 +15,9 @@ class Learning extends StatefulWidget {
 }
 
 class _LearningState extends State<Learning> {
-  List<UserModel> users = [
-    UserModel(name: "7asabala", number: 012101023210, photo: 'gvbhjnmk'),
-    UserModel(name: "gbhjnk", number: 012101023210, photo: 'gvbhjnmk'),
-    UserModel(name: "f7t6yugjhl", number: 012101023210, photo: 'gvbhjnmk'),
-    UserModel(name: "juh", number: 012101023210, photo: 'gvbhjnmk'),
-    UserModel(name: "drtfgyuhjio", number: 012101023210, photo: 'gvbhjnmk'),
-    UserModel(name: "cvbn", number: 012101023210, photo: 'gvbhjnmk'),
-    UserModel(name: "ygihn", number: 012101023210, photo: 'gvbhjnmk'),
-    UserModel(name: "6yu h", number: 012101023210, photo: 'gvbhjnmk'),
-    UserModel(name: "yyiopi", number: 012101023210, photo: 'gvbhjnmk'),
-  ];
-  var _currentStep = 0;
+  Store _store = Store();
+
+  List<Product> _allProducts = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,50 +25,71 @@ class _LearningState extends State<Learning> {
           backgroundColor: Colors.white,
         ),
         backgroundColor: Colors.amber,
-        body: ListView.separated(
-            itemBuilder: (context, index) => buildMyRow(users[index]),
-            separatorBuilder: (context, index) => Divider(
-                  color: Colors.black,
-                ),
-            itemCount: users.length));
+        body: StreamBuilder<QuerySnapshot>(
+            stream: _store.loadProducts(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                List<Product> productsList = [];
+                for (var doc in snapshot.data!.docs) {
+                  productsList.add(Product(
+                      name: doc[fProductName] ?? '',
+                      description: doc[fProductDiscreption],
+                      img: fProductImage,
+                      location: fProductLocation,
+                      prise: fProductPrise,
+                      category: fProductCategory,
+                      productId: 'dd'));
+                }
+                _allProducts = productsList;
+                //productsList.clear;
+                //getProductByCategory(kBoards);
+
+                return Center(
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2, childAspectRatio: 0.4),
+                    itemCount: productsList?.length ?? 0,
+                    itemBuilder: (context, index) => GestureDetector(
+                      child: Column(
+                        children: [
+                          //Image.network(productsList[index].img),
+                          Text(
+                            productsList[index].name ?? 'null',
+                          ),
+                          Text(
+                            productsList[index].prise ?? 'null',
+                          ),
+                          Text(
+                            productsList[index].description ?? 'null',
+                          ),
+                          Text(
+                            productsList[index].category ?? 'null',
+                          ),
+                          OutlinedButton(
+                              onPressed: () {
+                                print(
+                                  productsList[index].category ?? 'null',
+                                );
+                              },
+                              child: Text('Buy Now'))
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            }));
+  }
+
+  getProductByCategory(String categoryConst) {
+    List<Product> productsList = [];
+    for (var product in _allProducts) {
+      if (product.category == kBoards) {
+        productsList.add(product);
+      }
+    }
+    return productsList;
   }
 }
-
-class UserModel {
-  final String name;
-  final int number;
-  final String photo;
-  UserModel({required this.name, required this.number, required this.photo});
-}
-
-Widget buildMyRow(UserModel userModel) {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Container(
-      width: double.infinity,
-      height: 65,
-      decoration: BoxDecoration(
-          color: Colors.yellow,
-          borderRadius: BorderRadius.all(Radius.circular(20))),
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 30,
-            child: FlutterLogo(
-              size: 30,
-            ),
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [Text(userModel.name), Text(userModel.photo.toString())],
-          )
-        ],
-      ),
-    ),
-  );
-}
-
-

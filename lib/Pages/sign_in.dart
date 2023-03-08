@@ -33,7 +33,7 @@ class _SignInState extends State<SignIn> {
 
   String? gPass;
 
-  var adminPassword = 'Admin1234';
+  var adminPassword = '123456';
   late Image img1;
   @override
   void initState() {
@@ -100,9 +100,10 @@ class _SignInState extends State<SignIn> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Learning()));
+                                        builder: (context) => Home()));
                               },
-                              child: Text('Leaning')),
+                              child: Text(
+                                  'Leaning')), ///////////////////Learn-----
                           ElevatedButton(
                               onPressed: () async {
                                 await authObj.namozag.signOut().whenComplete(
@@ -120,7 +121,7 @@ class _SignInState extends State<SignIn> {
                           ElevatedButton(
                               child: Text('get Data'),
                               onPressed: () {
-                                storeObj.getProduct();
+                                storeObj.loadProducts();
                               }),
                         ],
                       ),
@@ -154,6 +155,7 @@ class _SignInState extends State<SignIn> {
       } else {
         try {
           await authObj.signIn(emil: gEmail.toString(), pass: gPass.toString());
+
           FocusManager.instance.primaryFocus?.unfocus();
           modelHud.cahngeLoading(false);
           Navigator.of(context)

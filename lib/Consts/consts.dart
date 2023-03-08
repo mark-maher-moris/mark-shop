@@ -11,3 +11,6 @@ const fProductImage = "Product Image";
 const fProductLocation = "Product Location";
 const fProductDiscreption = "Product Discrebtion";
 const fProductCategory = "Product Category";
+const kBoards = 'Boards';
+const kSensors = 'Sensors';
+const kProjects = 'Projects';

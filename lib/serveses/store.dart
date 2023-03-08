@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:mark_shop/Style/consts.dart';
+import 'package:mark_shop/Consts/consts.dart';
 
 import '../Models/product.dart';
 
@@ -21,8 +21,39 @@ class Store {
     return _firestoreInst.collection(fProductCollection).snapshots();
   }
 
-  Future<List<Product>> getProduct() async {
-    List<Product> productsList = [];
+  deleteProduct(docID) {
+    _firestoreInst.collection(fProductCollection).doc(docID).delete();
+  }
+
+  editProduct(docID, data) {
+    _firestoreInst.collection(fProductCollection).doc(docID).update(data);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // Future<List<Product>> getProduct() async {
 
     // for (var doc in snapshot.documentes) {
     //   var data = doc.data;
@@ -35,19 +66,21 @@ class Store {
     //       category: data[fProductCategory] ?? ''));
     // }
 
-    var snapshot2 = await _firestoreInst
-        .collection(fProductCollection)
-        .get()
-        .then((value) => value.docs.forEach((DocumentSnapshot doc) {
-              productsList.add(Product(
-                  name: doc[fProductName] ?? '',
-                  description: doc[fProductDiscreption] ?? '',
-                  img: doc[fProductImage],
-                  location: doc[fProductLocation] ?? '',
-                  prise: doc[fProductPrise],
-                  category: doc[fProductCategory] ?? ''));
-            }));
 
-    return productsList;
-  }
-}
+    // List<Product> productsList = [];
+
+    // var snapshot2 = await _firestoreInst
+    //     .collection(fProductCollection)
+    //     .get()
+    //     .then((value) => value.docs.forEach((DocumentSnapshot doc) {
+    //           productsList.add(Product(
+    //               name: doc[fProductName] ?? '',
+    //               description: doc[fProductDiscreption] ?? '',
+    //               img: doc[fProductImage],
+    //               location: doc[fProductLocation] ?? '',
+    //               prise: doc[fProductPrise],
+    //               category: doc[fProductCategory] ?? ''));
+    //         }));
+
+    // return productsList;
+ // }
