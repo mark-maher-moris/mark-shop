@@ -6,8 +6,11 @@ class Product {
   String description;
   String category;
   String productId;
+  int? quantity = 0;
+
   Product(
-      {required this.name,
+      {this.quantity,
+      required this.name,
       required this.description,
       required this.img,
       required this.location,

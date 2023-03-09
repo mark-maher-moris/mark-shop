@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mark_shop/Learning/learning-screen.dart';
 import 'package:mark_shop/Pages/home.dart';
 import 'package:mark_shop/provider/adminMode.dart';
+import 'package:mark_shop/provider/cartProvider.dart';
 import 'package:mark_shop/provider/modelHub.dart';
 import 'package:mark_shop/provider/toEdit.dart';
 import '/Pages/sign_in.dart';
@@ -27,6 +28,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider<ModelHud>(create: (context) => ModelHud()),
         ChangeNotifierProvider<AdminMode>(create: (context) => AdminMode()),
         ChangeNotifierProvider<ToEdit>(create: (context) => ToEdit()),
+        ChangeNotifierProvider<Cart>(create: (context) => Cart())
       ],
       child: MaterialApp(
         title: 'Mark Shop',

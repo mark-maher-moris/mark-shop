@@ -28,6 +28,27 @@ class Store {
   editProduct(docID, data) {
     _firestoreInst.collection(fProductCollection).doc(docID).update(data);
   }
+
+  storeOrders(data, List<Product> products) {
+    _firestoreInst.collection(kOrders).add({
+      fProductName: 'product.name',
+    });
+
+    var docRef = _firestoreInst.collection(kOrders).doc();
+    docRef.set(data);
+    for (var product in products) {
+      docRef.collection(kOrderDetails).doc().set({
+        fProductName: product.name,
+        fProductCategory: product.category,
+        fProductDiscreption: product.description,
+        fProductImage: product.img,
+        fProductLocation: product.location,
+        fProductName: product.name,
+        fProductPrise: product.prise,
+        kProductQuantity: product.quantity,
+      });
+    }
+  }
 }
 
 

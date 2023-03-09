@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mark_shop/Models/product.dart';
+import 'package:mark_shop/Pages/cartScreen.dart';
 import 'package:mark_shop/Pages/productInfo.dart';
 import 'package:mark_shop/serveses/auth.dart';
 import '../Consts/consts.dart';
@@ -64,7 +65,7 @@ class _HomeState extends State<Home> {
                 appBar: AppBar(
                   backgroundColor: Colors.black,
                   bottom: TabBar(
-                      indicatorWeight: 7,
+                      indicatorWeight: 5,
                       onTap: (valu) {
                         setState(() {
                           tapBarIndex = valu;
@@ -107,7 +108,12 @@ class _HomeState extends State<Home> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  //Text('Text ')
+                  IconButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => CartScreen()));
+                      },
+                      icon: Icon(Icons.shopping_cart_checkout_outlined))
                 ],
               ),
             ),
@@ -160,10 +166,10 @@ class _HomeState extends State<Home> {
                       ),
                       OutlinedButton(
                           onPressed: () {
-                            print(Navigator.of(context).push(MaterialPageRoute(
+                            Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => ProductInfo(
                                       product: productsList[index],
-                                    ))));
+                                    )));
                           },
                           child: Text('Buy Now'))
                     ],
